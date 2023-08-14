@@ -1,8 +1,19 @@
-import './style.css'
-import { setupCounter } from './counter.ts'
+import '../styles/global.css'
+import '../styles/item.css'
+
 import { items } from  '../utils/data.ts'
 
-let selectedItems: any = [];
+interface Items{
+    id: number,
+    name: string, 
+    image: string, 
+    price: number,
+}
+declare global {
+  interface Window {addItem:  (e: any) => void}
+}
+
+let selectedItems: Items[] = [];
 
 document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   <div>
@@ -16,7 +27,6 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
   </div>
 `
 
-console.log(items)
 document.querySelector<HTMLDivElement>("#items")!.innerHTML = `
   ${items.map(item => (
     `<div data-id="${item.id}" onclick="addItem(event)" class="item">
@@ -27,33 +37,29 @@ document.querySelector<HTMLDivElement>("#items")!.innerHTML = `
     </div>`
   )).join("")}
 `
-document.querySelector<HTMLElement>("aside")!.innerHTML = `
-    <ul>
-      ${selectedItems.map((item: any) => (
-        `<li>${item.name} - ${item.price}</li>`
-      ))}
-    </ul>
-`
+function updateCalculator(){
+  document.querySelector<HTMLElement>("aside")!.innerHTML = `
+      <ul>
+        ${selectedItems.map((item: any) => (
+          `<li>${item.name} - ${item.price}</li>`
+        )).join('')}
+      </ul>
+  `;
+}
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+updateCalculator()
 
-// function addItem(id: number){
-//   console.log(  'entrou aqui ')
-//   selectedItems.push(items.find(item => id === item.id))
-//   console.log(selectedItems)
-// }
+function findItemById(id: number){
+  return items.find(item => item.id === id) ?? null
+}
 
-// addItem(document.querySelectorAll<HTMLDivElement[]>(".item")!)
-  export function addItem(element: any){
-    console.log(element.dataset.id)
+window.addItem = (element: any) => {
+  let newItem = findItemById(+element.currentTarget.dataset.id)
+  console.log(newItem)
+  if (newItem != null){
+    selectedItems.push(newItem)
+    updateCalculator()
+    console.log(selectedItems)
   }
 
-// function addItem(element: HTMLDivElement[]) {
-// //   console.log(  'entrou aqui ')
-// //   selectedItems.push(items.find(item => id === item.id))
-// //   console.log(selectedItems)
-//   function addToList(){
-//     console.log(element.dataset.id)
-//   }
-  // element.addEventListener('click', () => addToList())
-// }
+}

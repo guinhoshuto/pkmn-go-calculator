@@ -1,0 +1,33 @@
+#items {
+  display: flex;
+  gap: 1.6rem;
+  flex-wrap: wrap;
+}
+
+.item{
+  border-radius: 1.2rem;
+  width: 20%;
+  aspect-ratio: 1/1;
+
+  display: flex;
+  padding: 1.6rem;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: .2rem;
+
+  border-radius: 12px;
+  border: 2px solid rgba(49, 57, 73, 0.50);
+  background: linear-gradient(48deg, #2C3341 0%, #313949 100%);
+  box-shadow: 10px 10px 20px 0px #262C37, 
+            -10px -10px 20px 0px rgba(72, 80, 99, 0.26);
+  
+  cursor: pointer;
+
+  margin-bottom: 1.2rem;
+}
+
+.item-thumb{
+  width: 100%;
+  height: auto;
+}
