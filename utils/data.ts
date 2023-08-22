@@ -5,7 +5,7 @@ interface Items{
     price: number,
 }
 
-const items: Items[] = [
+export const data: Items[] = [
     {
         id: 1,
         name: "Remote pass raid", 
@@ -44,4 +44,3 @@ const items: Items[] = [
     },
 ]
 
-export {items}

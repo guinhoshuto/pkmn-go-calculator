@@ -32,15 +32,26 @@ main {
 h1{
   margin: 4.8rem 0;
   font-size: 3.2rem;
+  align-self:start; 
 }
 
 .calculator{
   width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  
 }
 
 aside{
+  display: flex;
+  justify-content: center;
+
   width: 40rem;
   height: 100%;
-  background: linear-gradient(to right bottom, #292b30, #26282d, #232529, #202226, #1d1f23);
+  background: linear-gradient(48deg, #2C3341 0%, #313949 100%);
+  box-shadow: 10px 10px 20px 0px #262C37, 
+            -10px -10px 20px 0px rgba(72, 80, 99, 0.16);
   border-radius: 1.2rem;
 }
