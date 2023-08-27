@@ -1,8 +1,8 @@
 import '../styles/global.css'
 import '../styles/item.css'
+import '../styles/list.css'
 
 import { data } from  '../utils/data.ts'
-
 interface Item{
     id: number,
     qtd: number,
@@ -17,24 +17,6 @@ declare global {
   interface Window {changeQtd:  (e: any) => void}
 }
 
-function renderItem(item: Item){
-  return (
-    `<div data-id="${item.id}" data-qtd="1" onclick="changeQtd(event)" class="item">
-      <img class="item-thumb" src="../assets/${item.image}" alt="${item.name}"> 
-      <div class="item-qtd">
-        <button 
-          onclick="changeQtd(event)" 
-          data-id="${item.id}" 
-          data-qtd="-1" 
-          class="item-qtd-btn">-</button>
-        <button onclick="changeQtd(event)" data-id="${item.id}" data-qtd="1" class="item-qtd-btn"   id="add">+</button>
-      </div>  
-    </div>`
-  )
-}
-
-//tá rolando esse bug https://stackoverflow.com/questions/2385113/howto-div-with-onclick-inside-another-div-with-onclick-javascript
-
 function renderItemList(item: Item){
   console.log(item.id, item.qtd)
   return(
@@ -42,11 +24,36 @@ function renderItemList(item: Item){
   )
 }
 
+export function findItemById(items: Item[], id: number){
+  return items.find(item => item.id === id) ?? null
+}
+
+export function renderItem(item: Item){
+  return (
+    `<div data-id="${item.id}" data-qtd="1" class="item">
+      <img class="item-thumb" src="../assets/${item.image}" alt="${item.name}"> 
+      <h2>${item.name} - ${item.price}</h2>
+      <div class="item-qtd">
+        <button 
+          onclick="changeQtd(event)" 
+          data-id="${item.id}" 
+          data-qtd="-1" 
+          class="item-qtd-btn">-</button>
+        <button 
+          onclick="changeQtd(event)" 
+          data-id="${item.id}" 
+          data-qtd="1" 
+          class="item-qtd-btn">+</button>
+      </div>  
+    </div>`
+  )
+}
+
 document.querySelector<HTMLDivElement>("#items")!.innerHTML = `
   ${items.map(item => renderItem(item)).join("")}
 `
 function renderCalculator(){
-  document.querySelector<HTMLElement>("aside")!.innerHTML = `
+  document.querySelector<HTMLElement>(".selected-items")!.innerHTML = `
       <ul>
         ${items.map((item: Item) => 
           item.qtd > 0 ? (renderItemList(item)) : ( '')
@@ -55,17 +62,18 @@ function renderCalculator(){
   `;
 }
 
-renderCalculator()
-
-function findItemById(id: number){
-  return items.find(item => item.id === id) ?? null
+function getTotal(items: Item[]): number{
+  return items.reduce((acc, item) => acc + item.qtd * item.price, 0)
 }
 
 window.changeQtd = (element: any) => {
-  let newItem = findItemById(+element.currentTarget.dataset.id)
+  let newItem = findItemById(items, +element.currentTarget.dataset.id)
   console.log(newItem)
   if (newItem != null){
     newItem.qtd += +element.currentTarget.dataset.qtd
+    document.querySelector<HTMLDivElement>(".result span")!.innerHTML = `${getTotal(items)}`
     renderCalculator()
   }
 }
+
+renderCalculator()
