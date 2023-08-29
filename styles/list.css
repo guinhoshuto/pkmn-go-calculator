@@ -26,6 +26,7 @@ aside{
 .selected-items ul li{
   display:flex;
   justify-content:space-between;
+  align-items: end;
   margin-top: 1.2rem;
 }
 

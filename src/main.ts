@@ -21,7 +21,7 @@ declare global {
 
 function renderItemList(item: Item){
   let bundles = 0;
-  let single = 0;
+  let single = item.qtd;
   if(item.bundle){
     bundles = Math.floor(item.qtd/item.bundle) 
     single = item.qtd%item.bundle
@@ -29,7 +29,8 @@ function renderItemList(item: Item){
   return(
     `<li>
       <span>
-        ${item.qtd}x ${item.name}
+        ${bundles > 0 ? (`${bundles}x ${item.name} bundle<br/>`) : ''}
+        ${single > 0 ? (`${single}x ${item.name}`) : ''}
       </span><span> ${calculatePrice(item)}</span></li>`
   )
 }
