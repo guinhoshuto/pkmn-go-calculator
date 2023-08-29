@@ -6,8 +6,9 @@
 
 .item{
   border-radius: 1.2rem;
-  width: 20%;
-  aspect-ratio: 1/1;
+  width: 20rem;
+
+  position: relative;
 
   display: flex;
   padding: 2.4rem;
@@ -31,9 +32,16 @@
   font-size: 1.2rem;
 }
 
-.item-thumb{
-  width: 100%;
-  height: auto;
+.item-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12rem;
+  height: 12rem;
+}
+
+.item-thumb img{
+  height: 100%;
 }
 
 .item-qtd{
@@ -54,4 +62,22 @@
               -8px -8px 20px 0px rgba(72, 80, 94, 0.45), 
               8px 8px 10px 0px #2B3240 inset, 
               -8px -8px 10px 0px #2D3547 inset;
+}
+
+.dot{
+  display: grid;
+  place-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  font-size: 1.6rem;
+  background: tomato;
+  color: white;
+  position: absolute;
+  top: -5%;
+  right: 0;
+  border-radius: 999px;
+
+  transform: translate(50%);
+  box-shadow: 10px 10px 20px 0px #262C37, 
+            -10px -10px 20px 0px rgba(72, 80, 99, 0.26);
 }

@@ -9,6 +9,8 @@ interface Item{
     name: string, 
     image: string, 
     price: number,
+    bundle?: number,
+    bundle_value?: number
 }
 
 const items = data.map(item => ({qtd: 0, ...item}))
@@ -18,20 +20,36 @@ declare global {
 }
 
 function renderItemList(item: Item){
-  console.log(item.id, item.qtd)
+  let bundles = 0;
+  let single = 0;
+  if(item.bundle){
+    bundles = Math.floor(item.qtd/item.bundle) 
+    single = item.qtd%item.bundle
+  }
   return(
-    `<li>${item.qtd} - ${item.name} - ${item.qtd*item.price}</li>`
+    `<li>
+      <span>
+        ${item.qtd}x ${item.name}
+      </span><span> ${calculatePrice(item)}</span></li>`
   )
 }
 
-export function findItemById(items: Item[], id: number){
+
+function calculatePrice(item: Item){
+  return item.bundle ?  Math.floor(item.qtd/item.bundle)*item.bundle_value! + item.qtd%item.bundle*item.price : item.qtd*item.price;
+}
+
+
+function findItemById(items: Item[], id: number){
   return items.find(item => item.id === id) ?? null
 }
 
-export function renderItem(item: Item){
+function renderItem(item: Item){
   return (
     `<div data-id="${item.id}" data-qtd="1" class="item">
-      <img class="item-thumb" src="../assets/${item.image}" alt="${item.name}"> 
+      <div class="item-thumb">
+        <img src="../assets/${item.image}" alt="${item.name}"> 
+      </div>
       <h2>${item.name} - ${item.price}</h2>
       <div class="item-qtd">
         <button 
@@ -45,18 +63,22 @@ export function renderItem(item: Item){
           data-qtd="1" 
           class="item-qtd-btn">+</button>
       </div>  
+      ${item.qtd > 0 ? (`<div class='dot'>${item.qtd}</div>`) : ('')}
     </div>`
   )
 }
 
-document.querySelector<HTMLDivElement>("#items")!.innerHTML = `
-  ${items.map(item => renderItem(item)).join("")}
-`
+function renderItems(){
+  document.querySelector<HTMLDivElement>("#items")!.innerHTML = `
+    ${items.map(item => renderItem(item)).join("")}
+  `
+}
+
 function renderCalculator(){
   document.querySelector<HTMLElement>(".selected-items")!.innerHTML = `
       <ul>
         ${items.map((item: Item) => 
-          item.qtd > 0 ? (renderItemList(item)) : ( '')
+          item.qtd > 0 ? (renderItemList(item)) : ('')
         ).join('')}
       </ul>
   `;
@@ -67,13 +89,16 @@ function getTotal(items: Item[]): number{
 }
 
 window.changeQtd = (element: any) => {
-  let newItem = findItemById(items, +element.currentTarget.dataset.id)
-  console.log(newItem)
-  if (newItem != null){
-    newItem.qtd += +element.currentTarget.dataset.qtd
-    document.querySelector<HTMLDivElement>(".result span")!.innerHTML = `${getTotal(items)}`
+  let selectedItem = findItemById(items, +element.currentTarget.dataset.id)
+  console.log(selectedItem)
+  if (selectedItem != null){
+    selectedItem.qtd += +element.currentTarget.dataset.qtd
+    if(selectedItem.qtd < 0) selectedItem.qtd = 0;
+    document.querySelector<HTMLDivElement>(".result span")!.innerHTML = `${getTotal(items)} <img src="./assets/coin.png">`
     renderCalculator()
+    renderItems()
   }
 }
 
+renderItems()
 renderCalculator()
