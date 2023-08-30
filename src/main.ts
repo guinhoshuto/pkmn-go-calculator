@@ -37,7 +37,7 @@ function renderItemList(item: Item){
 
 
 function calculatePrice(item: Item){
-  return item.bundle ?  Math.floor(item.qtd/item.bundle)*item.bundle_value! + item.qtd%item.bundle*item.price : item.qtd*item.price;
+  return new Intl.NumberFormat('pt-BR',{ maximumSignificantDigits: 3 }).format(item.bundle ?  Math.floor(item.qtd/item.bundle)*item.bundle_value! + item.qtd%item.bundle*item.price : item.qtd*item.price);
 }
 
 
@@ -86,7 +86,8 @@ function renderCalculator(){
 }
 
 function getTotal(items: Item[]): number{
-  return items.reduce((acc, item) => acc + item.qtd * item.price, 0)
+  return new Intl.NumberFormat('pt-BR',{ maximumSignificantDigits: 3 }).format(items.reduce((acc, item) => acc + item.qtd * item.price, 0))
+  // return items.reduce((acc, item) => acc + item.qtd * item.price, 0)')items.reduce((acc, item) => acc + item.qtd * item.price, 0)
 }
 
 window.changeQtd = (element: any) => {
