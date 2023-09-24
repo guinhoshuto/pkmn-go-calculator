@@ -85,7 +85,7 @@ function renderCalculator(){
   `;
 }
 
-function getTotal(items: Item[]): number{
+function getTotal(items: Item[]): string{
   return new Intl.NumberFormat('pt-BR',{ maximumSignificantDigits: 3 }).format(items.reduce((acc, item) => acc + item.qtd * item.price, 0))
   // return items.reduce((acc, item) => acc + item.qtd * item.price, 0)')items.reduce((acc, item) => acc + item.qtd * item.price, 0)
 }

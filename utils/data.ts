@@ -61,13 +61,13 @@ export const data: Items[] = [
     {
         id: 8,
         name: "Rocket Radar", 
-        image: "incense.png",
+        image: "rocketradar.png",
         price: 200,
     },
     {
         id: 9,
         name: "Star Piece", 
-        image: "incense.png",
+        image: "starpiece.png",
         price: 200,
     },
     {
@@ -92,11 +92,60 @@ export const data: Items[] = [
     },
     {
         id: 13,
+        name: "Glacial Lure Module", 
+        image: "glaciallure.png",
+        price: 180,
+    },
+    {
+        id: 14,
+        name: "Mossy Lure Module", 
+        image: "mosslure.png",
+        price: 180,
+    },
+    {
+        id: 15,
+        name: "Magnetic Lure Module", 
+        image: "metallure.png",
+        price: 180,
+    },
+    {
+        id: 16,
+        name: "Rainy Lure Module", 
+        image: "rainlylure.png",
+        price: 180,
+    },
+    {
+        id: 17,
         name: "Lure Module", 
         image: "lure.png",
         price: 100,
         bundle: 8,
         bundle_value: 680
     },
+    {
+        id: 18,
+        name: "Item Bag Upgrade", 
+        image: "itemstorageupgrade.png",
+        price: 200,
+    },
+    {
+        id: 19,
+        name: "Pokémon Storage Upgrade", 
+        image: "storageupgrade.png",
+        price: 200,
+    },
+    {
+        id: 20,
+        name: "Postcard Pae", 
+        image: "postcard.png",
+        price: 100,
+    },
+    {
+        id: 21,
+        name: "Team Medallion", 
+        image: "team.png",
+        price: 1000,
+    },
+
 ]
 
